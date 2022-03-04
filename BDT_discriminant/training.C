@@ -1,9 +1,6 @@
 {
   // Open an input file for training and test:
   // NB: To avoid basket's WriteBuffer full problem, the input file pointer of TFile should be obtained before opening outputFile.
-  //TFile* signal_file = TFile::Open("../signal/output/VBS.root");
-  //TFile* bkg_lep_flie = TFile::Open("../bkg/output/lep.root");
-  //TFile* bkg_ttbar_file = TFile::Open("../ttbar_nonallhad_bkg/output/ttbar.root");
   TFile* signal_file = TFile::Open("limit_minmass/neural/VBS_minmass.root");
   TFile* bkg_lep_flie = TFile::Open("limit_minmass/neural/lep_minmass.root");
   TFile* bkg_ttbar_file = TFile::Open("limit_minmass/neural/ttbar_minmass.root");
