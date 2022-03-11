@@ -21,8 +21,21 @@ $ vim .zshrc
 ```
 Then add source pathname/root/bin/thisroot.sh in the bash file.
 # How to install tenserflow
+In the icepp environment.
 ```shell
-$ pip install graph_nets "tensorflow>=1.15,<2" "dm-sonnet<2" "tensorflow_probability<0.9"
+$ python3 -m v env
+$ source env/bin/activate
+$ pip install --upgrade pip
+$ pip install tensorflow
 ```
 
 # How to install pytorch
+In the icepp environment.
+```shell
+$ python3 -m v env
+$ source env/bin/activate
+$ pip install --upgrade pip
+$ pip3 install torch==1.11.0+cu113 torchvision==0.12.0+cu113 torchaudio==0.11.0+cu113 -f https://download.pytorch.org/whl/cu113/torch_stable.html
+$ pip install torch-scatter torch-sparse torch-cluster torch-spline-conv torch-geometric -f https://data.pyg.org/whl/torch-1.10.0+cu113.html
+
+```
