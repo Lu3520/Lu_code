@@ -130,7 +130,6 @@ print("sample size : [DNN=31, CNN=16x16x2]")
 print("DNN size : ", len(DNN_train_sample[0]))
 print("CNN size : ", len(CNN_train_sample[0]))
 history = full_model.fit([DNN_train_sample, CNN_train_sample], DNN_train_label, epochs=100, validation_data=([DNN_test_sample, CNN_test_sample], DNN_test_label, test_weight_arr),  sample_weight=weight_arr, callbacks=[callback])
-#history = full_model.fit([DNN_train_sample, CNN_train_sample], DNN_train_label, epochs=50, validation_data=([DNN_test_sample, CNN_test_sample], DNN_test_label, test_weight_arr),  sample_weight=weight_arr)
 print()
 fig = show_history(history)  #show history function
 plt.savefig('pTbin/plot/DNN_CNN_sjet_trainfile_le21_flat_rate1_BDTinput_revised.png')
