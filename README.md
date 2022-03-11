@@ -1,5 +1,5 @@
 # How to install Root
-Download the root file https://root.cern/install/all_releases/ 
+Download the root file from https://root.cern/install/all_releases/ 
 
 The binary root file is recommended for the local computer because it doesn't need to construct the specific environment in your local computer.
 
