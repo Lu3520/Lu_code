@@ -87,18 +87,15 @@ model.compile(optimizer=opt,
               metrics=['accuracy'])
 
 
-#with open(cluster_fname + 'trainfile_le21_flat_distri.npy', 'rb') as cluster_trainfile_le21_intensity_f:
- #   cluster_trainfile_le21_intensity_arr = np.load(cluster_trainfile_le21_intensity_f)
 #train_sample
-with open(cluster_fname + 'trainfile_le21_flat_small_100k_distri.npy', 'rb') as cluster_trainfile_le21_intensity_f:
+with open(cluster_fname + 'trainfile.npy', 'rb') as cluster_trainfile_le21_intensity_f:
     cluster_trainfile_le21_intensity_arr = np.load(cluster_trainfile_le21_intensity_f)
-with open(track_fname + 'trainfile_le21_flat_small_100k_distri.npy', 'rb') as track_trainfile_le21_intensity_f:
+with open(track_fname + 'trainfile.py', 'rb') as track_trainfile_le21_intensity_f:
     track_trainfile_le21_intensity_arr = np.load(track_trainfile_le21_intensity_f)
 train_sample = cluster_track_intensity_arr(cluster_trainfile_le21_intensity_arr, track_trainfile_le21_intensity_arr)
     
-with open(cluster_fname + 'trainfile_le21_flat_small_100k_label.npy', 'rb') as cluster_trainfile_le21_label_f:
+with open(cluster_fname + 'trainfile_label', 'rb') as cluster_trainfile_le21_label_f:
     cluster_trainfile_le21_label_arr = np.load(cluster_trainfile_le21_label_f)
-#train_label = label_trans(cluster_trainfile_le21_label_arr)
 train_label = cluster_trainfile_le21_label_arr
 
 
@@ -108,15 +105,14 @@ print("trainfile_le21_label : ", len(train_label))
 
 
 #input test sample
-with open(cluster_fname + 'testfile_le21_flat_small_50k_distri.npy', 'rb') as cluster_testfile_le21_intensity_f:
+with open(cluster_fname + 'testfile.npy', 'rb') as cluster_testfile_le21_intensity_f:
     cluster_testfile_le21_intensity_arr = np.load(cluster_testfile_le21_intensity_f)
-with open(track_fname + 'testfile_le21_flat_small_50k_distri.npy', 'rb') as track_testfile_le21_intensity_f:
+with open(track_fname + 'testfile.npy', 'rb') as track_testfile_le21_intensity_f:
     track_testfile_le21_intensity_arr = np.load(track_testfile_le21_intensity_f)
 test_sample = cluster_track_intensity_arr(cluster_testfile_le21_intensity_arr, track_testfile_le21_intensity_arr)
     
-with open(cluster_fname + 'testfile_le21_flat_small_50k_label.npy', 'rb') as cluster_testfile_le21_label_f:
+with open(cluster_fname + 'testfile_label.npy', 'rb') as cluster_testfile_le21_label_f:
     cluster_testfile_le21_label_arr = np.load(cluster_testfile_le21_label_f)
-#test_label = label_trans(cluster_testfile_le21_label_arr)
 test_label = cluster_testfile_le21_label_arr
 
 with open(cluster_fname + 'testfile_le21_flat_small_50k_weight.npy', 'rb') as test_weight_f:
@@ -125,44 +121,18 @@ test_weight_arr = 25000*test_weight_arr
 
 callback = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=15)
 
-#print("test label", test_label)
-
 print("--------Traning--------")
 print("sample size : 16x16x2")
 print("# of Sample : ", len(train_label))
 history = model.fit(train_sample, train_label, epochs=70, validation_data=(test_sample, test_label, test_weight_arr), sample_weight=weight_arr, callbacks=[callback])
-#history = model.fit(train_sample, train_label, epochs=50,  sample_weight=weight_arr, callbacks=[callback])
-#history = model.fit(train_sample, train_label, epochs=20, validation_data=(test_sample, test_label))
 print(history)
 fig = show_history(history)  #show history function
 plt.savefig('pTbin/plot/CNN_2D_training_sjet_train_le21_flat_small_1rate_100k.png')
 model.save('pTbin/model/CNN_2D_model_sjet_train_le21_flat_small_1rate_100k.h5')
 
-
-#print("test_sampe : ", len(test_sample))
-#print("test_label : ", len(test_label))
-
-#print("\n---------Evaluate--------")
-#model.evaluate(test_sample,  test_label, verbose=2)
-
 print("\n-------save npy----------")
-
-#print(test_label)
-print(weight_arr)
-#pro_arr = tf.nn.softmax(model(test_sample, batch_size=100))
 pro_arr = model.predict(test_sample, batch_size=100)
 pro_arr = tf.nn.softmax(pro_arr).numpy()
-print(pro_arr)
-
-
-#with open('output/CNN_2D_prob_sjet_train_le21_flat_weight_40times.npy', 'wb') as pro_f:
- #   np.save(pro_f, pro_arr)
-
-#with open('output/CNN_2D_label_sjet_train_le21_flat_weight_40times.npy', 'wb') as label_f:
- #   np.save(label_f, test_label)
-
-#print("layer weight: ", model.layers[-1].weights)
-
 
 print("regularization_Lambda: ", regularization_Lambda)
 print("learning rate: ", rate)
