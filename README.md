@@ -66,8 +66,8 @@ mkdir xxx : create a new file
 
 ```shell
 root[] Tree->Print() : print the trees
-root[] TBrowser s : see the plot in the TBrowser mode.
 root[] Tree->Scan("yourbranch") : print the value in the branch
+root[] TBrowser s : see the plot in the TBrowser mode.
 ```
 
 donwload :scp name@xx.xx.xx:~/path/yourfile.root .  (where ~ = home/yourname/ and . = now path)
