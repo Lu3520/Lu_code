@@ -10,3 +10,5 @@ print("filepath : ",filename)
 print("string":, args[0])
 
 print("-----successful run-----")
+
+# python cluster_arr.py -f path/fillname args
