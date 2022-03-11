@@ -67,3 +67,5 @@ class ParticleNet(nn.Module):
 
   def loss(self, pred, label):
       return F.nll_loss(pred, label)
+    
+#not finish yet in this code for particlenet model.
