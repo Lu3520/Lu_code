@@ -7,7 +7,7 @@ Then, you need to source the root in the terminal to use it in the terminal.
 ```shell
 $ source pathname/root/bin/thisroot.sh
 ```
-Therefore, the root could be used in the terminal.
+After the command, the root could be used in the terminal.
 
 For the convenience, it is helpful to add a command in the .bash file.
 
