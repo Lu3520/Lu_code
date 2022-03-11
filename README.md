@@ -62,14 +62,13 @@ emacs xx.C : Use emacs compiler to open the xx.C file
 
 In emacs :  Ctrl+x -> Ctrl+s (save the file), Ctrl+x -> Ctrl+C (leace the compiler), ctrl +s (search), ESC+w (copy), ctrl + y (paste)
 
-root[] TBrowser s : see the plot in the TBrowser mode.
-
 mkdir xxx : create a new file
 
+```shell
 root[] Tree->Print() : print the trees
-
+root[] TBrowser s : see the plot in the TBrowser mode.
 root[] Tree->Scan("yourbranch") : print the value in the branch
-
+```
 
 donwload :scp name@xx.xx.xx:~/path/yourfile.root .  (where ~ = home/yourname/ and . = now path)
 
