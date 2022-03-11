@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 from tensorflow import keras
 import matplotlib
 matplotlib.use('Agg')
-#ioff()
 
 def show_history(history):
     fig, ax = plt.subplots(1, 2, figsize=(15,5))
@@ -38,8 +37,8 @@ def label_trans(arr):
 
 #input training file
 
-cluster_fname = '/home/chengyu/paper/front_jet/root_numpy/array_save/s_cluster/'
-track_fname = '/home/chengyu/paper/front_jet/root_numpy/array_save/s_track/'
+cluster_fname = 'path'
+track_fname = 'path'
 
 
 
