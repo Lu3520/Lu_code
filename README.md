@@ -37,5 +37,10 @@ $ source env/bin/activate
 $ pip install --upgrade pip
 $ pip3 install torch==1.11.0+cu113 torchvision==0.12.0+cu113 torchaudio==0.11.0+cu113 -f https://download.pytorch.org/whl/cu113/torch_stable.html
 $ pip install torch-scatter torch-sparse torch-cluster torch-spline-conv torch-geometric -f https://data.pyg.org/whl/torch-1.10.0+cu113.html
-
 ```
+
+If you want to use GPU in the icepp, you need to login into a specific cluster.
+```shell
+ssh lxgpu01.icepp.jp -Y
+```
+See the details in https://www.icepp.jp/howtouse_gpu.html
