@@ -44,3 +44,35 @@ If you want to use GPU in the icepp, you need to login into a specific cluster.
 ssh lxgpu01.icepp.jp -Y
 ```
 See the details in https://www.icepp.jp/howtouse_gpu.html
+
+
+# Usually used Linux command
+sudo apt-get update : update in a sudo mode
+
+cd xx : enter the dictionary
+
+ls : see the file in the dictionary
+
+pwd : absolute address
+
+ls -a : see all file in the dictionary (including .file)
+
+
+emacs xx.C : Use emacs compiler to open the xx.C file
+
+In emacs :  Ctrl+x -> Ctrl+s (save the file), Ctrl+x -> Ctrl+C (leace the compiler), ctrl +s (search), ESC+w (copy), ctrl + y (paste)
+
+root[] TBrowser s : see the plot in the TBrowser mode.
+
+mkdir xxx : create a new file
+
+root[] Tree->Print() : print the trees
+
+root[] Tree->Scan("yourbranch") : print the value in the branch
+
+
+donwload :scp name@xx.xx.xx:~/path/yourfile.root .  (where ~ = home/yourname/ and . = now path)
+
+upload: scp yourfile.root name@xx.xx.xx:~/path/yourfile.root
+
+* -> all file
