@@ -14,13 +14,12 @@ For the convenience, it is helpful to add a command in the .bash file.
 In the linux OS,
 ```shell
 $ vim .bash
-$ source pathname/root/bin/thisroot.sh
 ```
 In the mac OS,
 ```shell
 $ vim .zshrc
-$ source pathname/root/bin/thisroot.sh
 ```
+Then add source pathname/root/bin/thisroot.sh in the bash file.
 # How to install tenserflow
 ```shell
 $ pip install graph_nets "tensorflow>=1.15,<2" "dm-sonnet<2" "tensorflow_probability<0.9"
