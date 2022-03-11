@@ -12,117 +12,17 @@ export ATLAS_LOCAL_ROOT_BASE=/cvmfs/atlas.cern.ch/repo/ATLASLocalRootBase
 alias setupATLAS='source ${ATLAS_LOCAL_ROOT_BASE}/user/atlasLocalSetup.sh'
 setupATLAS
 
-Then navigate to your build directory and setup the same analysis release:
-cd ../build
 
-bkill
-
-//source x86_64-*/setup.sh
-
-$ cd ~/tutorial2019/build
-$ setupATLAS
-$ lsetup git
-$ asetup --restore
+bkill : kill jobs in cluster
 
 Upload : scp file name@login.icepp.jp:~
+Download : scp name@login.icepp.jp:~/path/file .
 
-cmake -DATLAS_PACKAGE_FILTER_FILE=../package_filters.txt ../source/athena/Projects/WorkDir
-make
-source x86_64-centos7-gcc62-opt/setup.sh
-
-git remote add upstream https://git@gitlab.cern.ch:7999/atlas/athena.git
-
-cd ../../build
-cmake ../source/athena/Projects/WorkDir
-make
-source x86_64-centos7-gcc62-opt/setup.sh 
-
-ssh -Y name@lxplus.cern.ch   
-
-
-
-ServiceMgr.EventSelector.InputCollections = [
-    "/home/chlu/data2082d/tutorial2019/DxAODs/data18_13TeV.00352448.physics_Main.deriv.DAOD_STDM3.f938_m1979_p3583/DAOD_STDM3.14503110._000001.pool.root.1"
-]
-
-
-git atlas init-workdir ssh://git@gitlab.cern.ch:7999/chlu/athena.git 
-
-git atlas init-workdir ssh://git@gitlab.cern.ch:7999/chlu/athena.git
-
-ATLASでデータ保存に使われる単位はMeV, ns, mm, radianを使います。MeVは実際の物理解析を行うには小さいユニットですが、検出器のアプトプットを考えるとこの程度が妥当です。
-
-
-cd ../build/
-cmake ../source
-make
-source x86_64-centos7-gcc8-opt/setup.sh
-cd ../run
-athena.py ./MyAnalysisAlg_options.py 2>&1 | tee test.log
-
-make >& out.dat
-ZZ -> e mu
-WW-> e + nutrino 
-
-
-scp name@login.icepp.jp:~/path/file .
-
-
-
-
-
-
-rm -f log
-cat log_{1..100} > log
-
-rm -f Run15.root
+ssh -Y name@lxplus.cern.ch   : connect to your cern cluster
 
 source /home/software/root/bin/thisroot.sh
 
-hadd Run15.root Run15_*.root
-hadd Run15.root Run15_*.root
-
-Shallow copy 用法　
-std::pair<xAOD::ElectronContainer*, xAOD::ShallowAuxContainer*> shallowcopy = xAOD::shallowCopyContainer(*electronContainer);
-  auto copy = shallowcopy.first;
-  auto copyaux = shallowcopy.second;
-  bool setLinks = xAOD::setOriginalObjectLink(*electronContainer, *copy);
-  if (!setLinks) {
-  ATH_MSG_WARNING("Failed to set original object links on ");
-  }*/
-
-
-
-////
-JetCalibTools を MyAnalysisAlg_options.py に書く形式で走らせることができたので、共有しておきます。
-
-	MyAnalysisExample/MyAnalysisAlg.h:
-ToolHandle<IJetCalibrationTool> m_jetCalitool;
-のように宣言。
-
-	src/MyAnalysisAlg.cxx
-constructorでは
-  , m_jetCalitool("JetCalibrationTool/myCalibTool", this)
-のようにinitializeして、他のtoolと同じように
-declareProperty("JetCalibTool",m_jetCalitool, "The private jet calibration");
-と書く。
-initialize()内では、
-ATH_CHECK(m_jetCalitool.retrieve ());
-のようにする。
-
-	MyAnalysisAlg_options.py
-from JetCalibTools.JetCalibToolsConf import JetCalibrationTool
-myAnaAlg.JetCalibTool = JetCalibrationTool("myCalibTool",
-                                           JetCollection="AntiKt4EMPFlow",
-                                           ConfigFile="JES_MC16Recommendation_Consolidated_PFlow_Apr2019_Rel21.config",
-                                           CalibSequence="JetArea_Residual_EtaJES_GSC_Smear",
-                                           IsData=False)
-のようにする。
-
-cd /cvmfs/atlas.cern.ch/repo/sw/software/21.2/AthAnalysis/21.2.79/InstallArea/x86_64-slc6-gcc62-opt
-のディレクトリで
-find . -name "BTaggingSelectionTool*"
-Can find where the BTaggingslectiontool is 
+combine the root file hadd combine.root filename*.root
 
 ami
 もしくは login.icepp.jp 上で、
@@ -132,30 +32,11 @@ voms-proxy-init -voms atlas
 で設定をした後、
 (voms-proxy-info -all) 看權限
 ami show dataset info mc16_13TeV.364100.Sherpa_221_NNPDF30NNLO_Zmumu_MAXHTPTV0_70_CVetoBVeto.deriv.DAOD_SUSY1.e5271_s3126_r10201_p399
-
 ami show dataset info
 
-cross*genfilteff*kFactor
 
 root [2] CollectionTree->Scan(“MET_Reference_AntiKt4EMTopoAuxDyn.name")
 Can know container
-
-
-
-
-import glob
-datasets = glob.glob("")
-ServiceMgr.EventSelector.InputCollections = datasets
-theApp.EvtMax = -1 # -1 means all events
-
-
-bsub -q 4h -o output.log athena.py MyAnalysisAlg_options.py
-
-bsub -q 4h -o outputfile root -l -b -q training.C
-
-bsub -q 4h -o test_sig.log root -l -b -q test.C
-
-bsub -q 1d -o outputfile root -l -b -q Roofit_grid.C
 
 Check job : 
 bjobs
@@ -163,82 +44,11 @@ bjobs
 Check how many file in directory
 ls -1 | wc -l
 
-
-
-
-できたroot fileの中身を直接見るとどのようになっていますか？
-root filename
-でfileをrootで開いた後に
-treename->Scan(“Zboson_e_0th")
-
-
-jobs
-とすると、表示されると思うので例えば
 [1]+ emacs....
 となっている場合は
 kill -9 %1
 とするとkillできます
 
-
-
-Gitlab
-git clone https://:@gitlab.cern.ch:8443/chlu/test.git
-cd test
-touch README.md
-git add README.md
-git commit -m "add README”
-kinit chlu@CERN.CH
-
-$ git add analysis.cxx analysis.h
-$ git commit -m "adding test analysis code"
-$ git pull # .gitlab-ci.yml (への変更) を取ってくる。
-$ git push origin master
-
-
-root -l -b -q training.C | tee logfile
-TMVA::TMVAGui(“TMVA_BSMH.root”);
-
-
-
-
-
-TMVA::TMVAGui(“TMVA_Zmumu.root");
-
-
-gStyle->SetOptStat(0);
-
-
-etaカットは、muonの場合は|eta|<2.5, electronの場合は|eta|<2.47（ただし1.37<|eta|<1.52は除く）とする場合が多いです。なぜ1.37<|eta|<1.52を除くのかは勉強してみてください。
-
-met は vector sumしたもののtransverse energyで、sumetはscalar sumです。
-例えば２つの粒子があって4 vectorが(E1,px1,py1,pz1), (E2,px2,py2,pz2)だとすると、
-met は
-sqrt{(px1+px2)**2 + (py1+py2)**2}
-でsumetは、
-sqrt{px1**2 + py1**2} + sqrt{px2**2 + py2**2} 
-です。
-
-
-.profile
-source /Users/luchengyu/Downloads/root/bin/thisroot.sh
-
-
-.bash_profile
-export BASH_CONF="bash_profile"
-source /Users/luchengyu/Downloads/root/bin/thisroot.sh
-
-
-.bashrc
-export BASH_CONF="bashrc"
-source /Users/luchengyu/Downloads/root/bin/thisroot.sh
-
-
-.zshrc
-source ~/.bash_profile
-
- 
- 
- 例えば100イベント観測した時、その数に対する(1sigma)エラーは10になります(sqrt(100))。もし70イベントが期待されているビンで100イベント観測されたら、70から30イベント(=3sigma分布)超過しているので、「3sigmaの超過」といえます。
 
 vector<vector<float> >に関して
 LinkDef.h
@@ -283,20 +93,3 @@ lsetup "lcgenv -p LCG_98python3 x86_64-centos7-gcc9-opt scikitlearn"
 
 lsetup "lcgenv -p LCG_98python3 x86_64-centos7-gcc9-opt"
 でパッケージの一覧が確認できます。
-
-
-cp merge.root /home/chengyu/paper/root_numpy/rootfile/merge1.root
-
-
-bsub -q 4h -o output.log python try.py
-python3 -m v env
-$ source env/bin/activate
-$ pip install --upgrade pip
-$ pip install tensorflow
-
-Later : source env/bin/activate
-Logout : deactivate
-sklearn
-
-
-python3 -c 'import tensorflow as tf; print(tf.__version__)'
