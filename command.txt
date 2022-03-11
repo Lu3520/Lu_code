@@ -130,7 +130,6 @@ setupATLAS
 lsetup pyami
 voms-proxy-init -voms atlas
 で設定をした後、
-leo851123
 (voms-proxy-info -all) 看權限
 ami show dataset info mc16_13TeV.364100.Sherpa_221_NNPDF30NNLO_Zmumu_MAXHTPTV0_70_CVetoBVeto.deriv.DAOD_SUSY1.e5271_s3126_r10201_p399
 
