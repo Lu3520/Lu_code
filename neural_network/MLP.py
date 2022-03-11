@@ -23,15 +23,12 @@ def show_history(history):
 input_fname = 'output/arrayfile/'
 
 #train_sample
-with open(input_fname + 'trainfile_le21_le100_scalar.npy', 'rb') as trainfile_scalar_f:
+with open(input_fname + 'trainfile.npy', 'rb') as trainfile_scalar_f:
     train_sample = np.load(trainfile_scalar_f)
     
-with open(input_fname + 'trainfile_le21_le100_label.npy', 'rb') as trainfile_label_f:
+with open(input_fname + 'trainfile_label.npy', 'rb') as trainfile_label_f:
     train_label = np.load(trainfile_label_f)
 
-
-print("trainfile sample : ", len(train_sample))
-print("trainfile label : ", len(train_label))
 
 quark_label = 0
 gluon_label = 0
@@ -39,10 +36,6 @@ for i in range(len(train_label)):
     if train_label[i] == 0: quark_label = quark_label + 1
     if train_label[i] == 1: gluon_label = gluon_label + 1
 
-print("train : ", train_sample)
-print("label : ", train_label)
-print("n_quark : ", quark_label)
-print("n_gluon : ", gluon_label)
 
 
 regularization_Lambda = 0.00000001
@@ -53,8 +46,6 @@ model.add(layers.Dense(64, activation='relu', kernel_regularizer=tf.keras.regula
 model.add(layers.Dropout(0.3))
 model.add(layers.Dense(64, activation='relu', kernel_regularizer=tf.keras.regularizers.l2(l=regularization_Lambda)))
 model.add(layers.Dropout(0.3))
-#model.add(layers.Dense(64, activation='relu', kernel_regularizer=tf.keras.regularizers.l2(l=regularization_Lambda)))
-#model.add(layers.Dropout(0.3))
 model.add(layers.Dense(2))
 model.summary()
 
@@ -91,16 +82,7 @@ print("--------Traning--------")
 print("sample size : 31")
 print("# of Sample : ", len(train_sample))
 history = model.fit(train_sample, train_label, epochs=100, validation_data=(test_sample, test_label, test_weight_arr), sample_weight=weight_arr, callbacks=[callback])
-#history = model.fit(train_sample, train_label, epochs=100, validation_data=(test_sample, test_label))
 fig = show_history(history)  #show history function
-#plt.savefig('plot/DNN_2layer_sjet_train_le21_31_weight_nor_128.png')
-
-#plt.savefig('pTbin/plot/le21_le100_rate1_BDTinput_revised.png')
-#model.save('pTbin/model/DNN_sjet_train_le21_le100_rate1_BDTinput_revised.h5')
-
-
-print("test_sample : ", len(test_sample))
-print("test_label : ", len(test_label))
 
 print("\n---------Evaluate--------")
 
@@ -114,15 +96,11 @@ pro_arr = model.predict(test_sample, batch_size=100)
 pro_arr = tf.nn.softmax(pro_arr).numpy()
 print(pro_arr)
 
-#with open('prob_array/DNN_2layer_prob_sjet_train_le21_31_weight_nor_64_try.npy', 'wb') as pro_f:
- #   np.save(pro_f, pro_arr)
+with open('prob_array/DNN_2layer_prob_sjet_train_le21_31_weight_nor_64_try.npy', 'wb') as pro_f:
+    np.save(pro_f, pro_arr)
 
-#with open('prob_array/DNN_2layer_label_sjet_train_le21_31_weight_nor_64_try.npy', 'wb') as label_f:
- #   np.save(label_f, test_label)
-
-
-#print("model weight: ", model.layers[-1].weights)
-
+with open('prob_array/DNN_2layer_label_sjet_train_le21_31_weight_nor_64_try.npy', 'wb') as label_f:
+    np.save(label_f, test_label)
 
 print("regularization_Lambda: ", regularization_Lambda)
 print("learing rate: ", rate)
