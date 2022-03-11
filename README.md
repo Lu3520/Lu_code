@@ -19,7 +19,13 @@ In the mac OS,
 ```shell
 $ vim .zshrc
 ```
-Then add source pathname/root/bin/thisroot.sh in the bash file.
+Then add
+```shell
+source pathname/root/bin/thisroot.sh
+```
+in the bash file.
+
+You can source the bash file to use root immediately or the computer do the things in bash file automatically after you restart your computer.
 # How to install tenserflow
 In the icepp environment.
 ```shell
