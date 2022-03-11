@@ -3,7 +3,7 @@ Download the root file from https://root.cern/install/all_releases/
 
 The binary root file is recommended for the local computer because it doesn't need to construct the specific environment in your local computer.
 
-Then, you need to source the root in the terminal to use it in the terminal.
+After finishing the download, you need to source the root in the terminal in order to use it in the terminal.
 ```shell
 $ source pathname/root/bin/thisroot.sh
 ```
