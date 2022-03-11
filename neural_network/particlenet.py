@@ -1,4 +1,5 @@
 #reference : Graph Neural Networks (GNN) using Pytorch Geometric | Stanford University[https://www.youtube.com/watch?v=-UjytpbqX4A&t=2506s]
+#partcilenet : https://cms-ml.github.io/documentation/inference/particlenet.html
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
