@@ -20,35 +20,25 @@ def show_history(history):
 
 #input training file
 
-cluster_fname = '/home/chengyu/paper/front_jet/conv1d/arrayfile/cluster/'
-track_fname = '/home/chengyu/paper/front_jet/conv1d/arrayfile/track/'
+cluster_fname = 'path'
+track_fname = 'path'
 
 #train_sample
-with open(cluster_fname + 'trainfile_gt21_flat_less_distri.npy', 'rb') as cluster_trainfile_distri_f:
+with open(cluster_fname + 'trainfile.npy', 'rb') as cluster_trainfile_distri_f:
     cluster_conv1d_train_sample = np.load(cluster_trainfile_distri_f)
 
-with open(track_fname + 'trainfile_gt21_flat_less_distri.npy', 'rb') as track_trainfile_distri_f:
+with open(track_fname + 'trainfile.npy', 'rb') as track_trainfile_distri_f:
     track_conv1d_train_sample = np.load(track_trainfile_distri_f)
 
     
-with open(cluster_fname + 'trainfile_gt21_flat_less_label.npy', 'rb') as trainfile_label_f:
+with open(cluster_fname + 'trainfile__label.npy', 'rb') as trainfile_label_f:
     conv1d_train_label = np.load(trainfile_label_f)
-
-
-print("trainfile sample : ", len(cluster_conv1d_train_sample))
-print("trainfile label : ", len(conv1d_train_label))
 
 quark_label = 0
 gluon_label = 0
 for i in range(len(conv1d_train_label)):
     if conv1d_train_label[i] == 0: quark_label = quark_label + 1
     if conv1d_train_label[i] == 1: gluon_label = gluon_label + 1
-
-print("train : ", cluster_conv1d_train_sample)
-print("label : ", conv1d_train_label)
-print("n_quark : ", quark_label)
-print("n_gluon : ", gluon_label)
-
 
 regularization_Lambda = 0.00000001
 #model
@@ -126,62 +116,45 @@ full_model.compile(optimizer=opt,
 #callback
 callback = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=20)
 
-
-
-with open(cluster_fname + 'trainfile_gt21_flat_less_weight.npy', 'rb') as weight_f:
+with open(cluster_fname + 'trainfile_weight.npy', 'rb') as weight_f:
     conv1d_weight_arr = np.load(weight_f)
-conv1d_weight_arr = 23000*conv1d_weight_arr
 
 #input test sample
-#with open(cluster_fname + 'testfile_gt21_flat_less_distri.npy', 'rb') as cluster_testfile_distri_f:
- #   cluster_conv1d_test_sample = np.load(cluster_testfile_distri_f)
-#with open(track_fname + 'testfile_gt21_flat_less_distri.npy', 'rb') as track_testfile_distri_f:
- #   track_conv1d_test_sample = np.load(track_testfile_distri_f)
+with open(cluster_fname + 'testfile.npy', 'rb') as cluster_testfile_distri_f:
+    cluster_conv1d_test_sample = np.load(cluster_testfile_distri_f)
+with open(track_fname + 'testfile.npy', 'rb') as track_testfile_distri_f:
+    track_conv1d_test_sample = np.load(track_testfile_distri_f)
 
-#with open(cluster_fname + 'testfile_gt21_flat_less_label.npy', 'rb') as testfile_label_f:
- #   conv1d_test_label = np.load(testfile_label_f)
+with open(cluster_fname + 'testfile_label.npy', 'rb') as testfile_label_f:
+    conv1d_test_label = np.load(testfile_label_f)
 
-#with open(cluster_fname + 'testfile_gt21_flat_less_weight.npy', 'rb') as test_weight_f:
- #   conv1d_test_weight_arr = np.load(test_weight_f)
-#conv1d_test_weight_arr = 23000*conv1d_test_weight_arr
-
+with open(cluster_fname + 'testfile_weight.npy', 'rb') as test_weight_f:
+    conv1d_test_weight_arr = np.load(test_weight_f)
 
 # DNN
 #input training file
-DNN_fname = '/home/chengyu/paper/front_jet/DNN/output/arrayfile/'
+DNN_fname = 'path'
 #train_sample
-with open(DNN_fname + 'trainfile_gt21_flat_less_scalar.npy', 'rb') as DNN_train_scalar_f:
+with open(DNN_fname + 'trainfile.npy', 'rb') as DNN_train_scalar_f:
     DNN_train_sample = np.load(DNN_train_scalar_f)
 
-#with open(DNN_fname + 'testfile_gt21_flat_less_scalar.npy', 'rb') as DNN_test_scalar_f:
- #   DNN_test_sample = np.load(DNN_test_scalar_f)
+with open(DNN_fname + 'testfile.npy', 'rb') as DNN_test_scalar_f:
+    DNN_test_sample = np.load(DNN_test_scalar_f)
 
 
 DNN_train_sample = tf.reshape(DNN_train_sample, [int(DNN_train_sample.shape[0]), 1, 31])
-#DNN_test_sample = tf.reshape(DNN_test_sample, [int(DNN_test_sample.shape[0]), 1, 31])
+DNN_test_sample = tf.reshape(DNN_test_sample, [int(DNN_test_sample.shape[0]), 1, 31])
 
 
 print("--------Traning--------")
 print("sample size : 210 x 3")
 print("# of Sample : ", len(track_conv1d_train_sample))
-#history = full_model.fit([cluster_conv1d_train_sample, track_conv1d_train_sample, DNN_train_sample], conv1d_train_label, epochs=90, validation_data=([cluster_conv1d_test_sample, track_conv1d_test_sample, DNN_test_sample], conv1d_test_label, conv1d_test_weight_arr), sample_weight=conv1d_weight_arr, callbacks=[callback])
-
-history = full_model.fit([cluster_conv1d_train_sample, track_conv1d_train_sample, DNN_train_sample], conv1d_train_label, epochs=70,  sample_weight=conv1d_weight_arr, callbacks=[callback])
-#history = model.fit(train_sample, train_label, epochs=100, validation_data=(test_sample, test_label))
-#fig = show_history(history)  #show history function
-#plt.savefig('plot/DNN_2layer_sjet_train_gt21_flat_less_31_weight_nor_128.png')
-
-#plt.savefig('pTbin/plot/conv1d_all_gt21_flat_less_rate1_all_new.png')
+history = full_model.fit([cluster_conv1d_train_sample, track_conv1d_train_sample, DNN_train_sample], conv1d_train_label, epochs=90, validation_data=([cluster_conv1d_test_sample, track_conv1d_test_sample, DNN_test_sample], conv1d_test_label, conv1d_test_weight_arr), sample_weight=conv1d_weight_arr, callbacks=[callback])
+history = model.fit(train_sample, train_label, epochs=100, validation_data=(test_sample, test_label))
+fig = show_history(history)  #show history function
 full_model.save('pTbin/model/conv1d_all_gt21_flat_less_rate1_new.h5')
 
-
-#print("test_sample : ", len(cluster_conv1d_test_sample))
-#print("test_label : ", len(conv1d_test_label))
-
 print("\n---------Evaluate--------")
-
-#model.evaluate(conv1d_test_sample,  test_label, verbose=2)
-
 
 print("regularization_Lambda: ", regularization_Lambda)
 print("learing rate: ", rate)
