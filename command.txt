@@ -37,7 +37,7 @@ cmake ../source/athena/Projects/WorkDir
 make
 source x86_64-centos7-gcc62-opt/setup.sh 
 
-ssh -Y chlu@lxplus.cern.ch   
+ssh -Y name@lxplus.cern.ch   
 
 
 
