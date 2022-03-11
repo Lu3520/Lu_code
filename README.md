@@ -73,5 +73,3 @@ root[] TBrowser s : see the plot in the TBrowser mode.
 donwload :scp name@xx.xx.xx:~/path/yourfile.root .  (where ~ = home/yourname/ and . = now path)
 
 upload: scp yourfile.root name@xx.xx.xx:~/path/yourfile.root
-
-* -> all file
